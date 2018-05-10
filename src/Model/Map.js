@@ -23,22 +23,20 @@ export let computerMap = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
-//
-// import {humanMap} from './Model/Map.js'
-// import {computerMap} from './Model/Map.js'
+
 import {arrangeAShip} from '../App/arrangeAShip.js'
 
 export class Map {
-    constructor(map) {
-        this.map = map;
+    constructor(arr) {
+        this.arr = arr;
 
-        this.arrangeShips()
+        let map = this._arrangeShips(this.arr)
     }
 
-    arrangeShips(map) {
-        // console.log(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(humanMap, 4), 3), 3), 2))
-        console.log(arrangeAShip(arrangeAShip(humanMap, 4),3))
-        // arrangeAShip(humanMap, 4)
 
+
+    _arrangeShips(map) {
+        return arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(arrangeAShip(map, 4),3),3),2),2),2),1),1),1),1)
     }
 }
+

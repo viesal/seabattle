@@ -1,0 +1,22 @@
+.app{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.battleField__table{
+    border-collapse: collapse;
+}
+
+.battleEllement{
+    border-right: 2px solid #dee2e6;
+    width: 20px;
+    height: 20px;
+}
+
+.battleRow{
+
+    border-top: 2px solid #dee2e6;
+    width: 20px;
+    height: 20px;
+}
