@@ -1,52 +1,41 @@
 import {createElement} from "../../utils/createElement";
 import {humanMap} from "../../Model/Map";
 import './BattleField.css';
+import {Table} from "./Table";
+import {Map} from "../../Model/Map";
 
 export class BattleField {
     constructor(container) {
         this.container = container;
         const app = createElement(this.container, 'div', 'app');
-        let humanBattleField = this.createTable(app);
-        let computerBattleField = this.createTable(app);
-        this.fillTable()
+        this.humanBattleField = new Table(app);
+        this.computerBattleField = new Table(app);
+        let map = new Map();
+        this.fillTable(map, this.humanBattleField)
+        console.log(this.humanBattleField)
+        console.log(map)
     }
 
-    createTable(container) {
-        const abc = ['a', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и']
-        const field = createElement(container, 'div', 'battleField');
-        const table = createElement(field, 'table', 'battleField__table');
-        const thead = createElement(table, 'thead');
-        const tbody = createElement(table, 'tbody');
-        const thead__title = createElement(thead, 'tr');
-        for (let rowNumber = 0; rowNumber < 10; rowNumber++) {
-            const row = createElement(tbody, 'tr', 'battleRow');
-            for (let columnNumber = 0; columnNumber < 11; columnNumber++) {
-                if (rowNumber === 0) {
-                    const th = createElement(thead__title, 'th', 'battleEllement');
-                    th.innerText = abc[columnNumber - 1];
-                    if (columnNumber === 0) {
-                        th.innerText = '#';
-                    }
-                }
-                if (columnNumber === 0) {
-                    const th = createElement(row, 'th', 'battleEllement');
-                    th.innerText = rowNumber + 1;
-                }
-                else {
-                    let column = createElement(row, 'td', 'battleEllement');
-                    column.dataset.x = columnNumber;
-                    column.dataset.y = rowNumber + 1;
+
+    fillTable(map, field) {
+        map.ships.forEach((item)=>{
+            for (let i=0; i<item.lenght.length; i++){
+                if (item.isHorisontal){
+                    field.fillField(item.xCoord+i, item.yCoord, 1)
+                } else {
+                    field.fillField(item.xCoord, item.yCoord+i, 1)
                 }
             }
-        }
-    }
 
-    fillTable() {
-        humanMap.forEach((itemRow, indexRow)=>{
-            itemRow.forEach((itemColumn,indexColumn)=>{
-                console.log(indexColumn, indexRow, itemColumn)
-            })
         })
+
+        // humanMap.forEach((itemRow, indexRow)=>{
+        //     itemRow.forEach((itemColumn,indexColumn)=>{
+        //         if (itemColumn === 1){
+        //             console.log(indexColumn, indexRow)
+        //         }
+        //     })
+        // })
 
         // for (let [index, item] of humanMap){
         //     console.log(index, item)
