@@ -2,54 +2,35 @@ export function arrangeAShip(map, shipSize) {
     let bust = true;
     let xCoords, yCoords, position;
     while (bust) {
-        let size = shipSize;
-        xCoords = Math.round(0.5 + Math.random() * 10) - 1;
-        yCoords = Math.round(0.5 + Math.random() * 10) - 1;
+        let size = shipSize-1;
+        // min - 0.5 + Math.random() * (max - min + 1)
+        xCoords = Math.round(-0.5 + Math.random() * (11 - shipSize) + 1) - 1;
+        yCoords = Math.round(-0.5 + Math.random() * (11 - shipSize) + 1) - 1;
         position = Math.round(Math.random());
 
+        console.log(xCoords, yCoords)
+
         if (position) {
-            if (xCoords + size < 10) {
-                while (size > 0) {
-                    console.log(map[xCoords + size][yCoords], xCoords + size, yCoords)
-                    if (map[xCoords + size][yCoords] === 1 || map[xCoords + size - 1][yCoords] === 1 || map[xCoords + size][yCoords + 1] === 1 || map[xCoords + size][yCoords - 1] === 1) {
-                        bust = true;
-                    } else {
-                        bust = false;
-                    }
-                    size--;
+            while (size > 0) {
+                console.log(map[yCoords][xCoords + size], xCoords + size, yCoords)
+                if (map[yCoords][xCoords + size] === 1 || map[yCoords][xCoords + size - 1] === 1 || map[yCoords + 1][xCoords + size] === 1 || map[yCoords - 1][xCoords + size] === 1) {
+                    bust = true;
+                    break;
+                } else {
+                    bust = false;
                 }
-            } else {
-                while (size > 0) {
-                    console.log(map[xCoords - size][yCoords], xCoords - size, yCoords)
-                    if (map[xCoords - size][yCoords] === 1 || map[xCoords - size + 1][yCoords] === 1 || map[xCoords - size][yCoords + 1] === 1 || map[xCoords - size][yCoords - 1] === 1) {
-                        bust = true;
-                    } else {
-                        bust = false;
-                    }
-                    size--;
-                }
+                size--;
             }
         } else {
-            if (yCoords + size < 10) {
-                while (size > 0) {
-                    console.log(map[xCoords][yCoords + size], xCoords, yCoords + size)
-                    if (map[xCoords][yCoords + size] === 1 || map[xCoords][yCoords + size - 1] === 1 || map[xCoords + 1][yCoords + size] === 1 || map[xCoords - 1][yCoords + size] === 1) {
-                        bust = true;
-                    } else {
-                        bust = false;
-                    }
-                    size--;
+            while (size > 0) {
+                console.log(map[yCoords + size][xCoords], xCoords, yCoords + size)
+                if (map[yCoords + size][xCoords] === 1 || map[yCoords + size - 1][xCoords] === 1 || map[yCoords + size][xCoords + 1] === 1 || map[yCoords + size][xCoords - 1] === 1) {
+                    bust = true;
+                    break;
+                } else {
+                    bust = false;
                 }
-            } else {
-                while (size > 0) {
-                    console.log(map[xCoords][yCoords - size], xCoords, yCoords - size)
-                    if (map[xCoords][yCoords - size] === 1 || map[xCoords][yCoords - size + 1] === 1 || map[xCoords + 1][yCoords - size] === 1 || map[xCoords - 1][yCoords - size] === 1) {
-                        bust = true;
-                    } else {
-                        bust = false;
-                    }
-                    size--;
-                }
+                size--;
             }
         }
 
@@ -58,22 +39,13 @@ export function arrangeAShip(map, shipSize) {
     for (let i = 0; i < shipSize; i++) {
         // если position = true, то корабль горизонтальный
         if (position) {
-            if (xCoords + shipSize > 10) {
-                map[xCoords - i][yCoords] = 1;
-            }
-            else {
-                map[xCoords + i][yCoords] = 1;
-            }
+            map[yCoords][xCoords + i] = 1;
         }
         // иначе если position = false, то корабль вертикальный
         else {
-            if (yCoords + shipSize > 10) {
-                map[xCoords][yCoords - i] = 1;
-            }
-            else {
-                map[xCoords][yCoords + i] = 1;
-            }
+            map[yCoords + i][xCoords] = 1;
         }
     }
+    console.log([...map])
     return map
 }
