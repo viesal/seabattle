@@ -18,16 +18,40 @@ export class Map {
 
     getMapShip() {
         let map = [...new Array(10)].map(() => {
-            return new Array(10)
+            return [...new Array(10)].map(() => {
+                return 0;
+            })
         });
-        for (const ship of this.ships) {
-            const shipPoint = ship.getShipPoints();
-            shipPoint.forEach((item) => {
-                map[item[1]][item[0]] = 1;
-            });
-        }
+        this.ships.forEach((ship) => {
+            for (let i = 0; i < ship.length.length; i++) {
+                if (ship.isHorisontal) {
+                    map[ship.y][ship.x + i] = 1;
+                } else {
+                    map[ship.y + i][ship.x] = 1;
+                }
+            }
+        });
         return map;
+    }
 
+    findShip(x, y){
+        let targetShip
+        const shipPoints = this.ships.map((ship)=>{
+            ship.getShipPoints().forEach((coord, index)=>{
+                if (coord.x === x && coord.y===y){
+                    ship.length[index] = 1;
+                    targetShip = ship;
+                }
+            })
+
+        });
+        return targetShip;
+    }
+
+    allShipKilled(){
+        this.ships.forEach((ship)=>{
+
+        })
     }
 }
 

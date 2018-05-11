@@ -1,22 +1,23 @@
-export class Ship{
-    constructor(xCoord, yCoord, isHorisontal, lenght){
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+export class Ship {
+    constructor(x, y, isHorisontal, lenght) {
+        this.x = x;
+        this.y = y;
         this.isHorisontal = isHorisontal;
-        this.lenght = [...new Array(lenght)].map(()=>{
+        this.length = [...new Array(lenght)].map(() => {
             return 0;
         });
     }
-    
-    getShipPoints(){
+
+    getShipPoints() {
         let shipPoint = [];
-        for (let i=0; i<length.lenght; i++) {
+        for (let i = 0; i < this.length.length; i++) {
             if (this.isHorisontal) {
-                shipPoint.push([this.xCoord + i, this.yCoord])
+                shipPoint.push({x: this.x + i, y: this.y})
             } else {
-                shipPoint.push([this.xCoord, this.yCoord + i])
+                shipPoint.push({x: this.x, y: this.y + i})
             }
         }
+
         return shipPoint;
     }
 
