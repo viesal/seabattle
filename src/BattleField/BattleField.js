@@ -92,7 +92,7 @@ export class BattleField {
                 this.computerBattleField.stepStatusHide(true);
                 this.humanBattleField.stepStatusHide(false);
                 this.block.style.display = 'none';
-            }, 1000)
+            }, 500)
 
         }
 

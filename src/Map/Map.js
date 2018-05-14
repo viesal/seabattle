@@ -50,12 +50,12 @@ export class Map {
     allShipKilled() {
         let kill_list = 0;
         this.ships.forEach((ship) => {
-            if (ship.isKill){
+            if (ship.isKill) {
                 kill_list++;
             }
 
         });
-        if (kill_list === 10){
+        if (kill_list === 10) {
             return true;
         }
         else {
@@ -66,6 +66,7 @@ export class Map {
     arrangeAShip(map, shipSize) {
         let bust = true;
         let x, y, direction;
+
         while (bust) {
             let size = shipSize - 1;
             x = Math.round(-0.5 + Math.random() * (11 - shipSize) + 1) - 1;
@@ -73,14 +74,14 @@ export class Map {
             direction = Math.round(Math.random());
             while (size >= 0) {
                 if (direction) {
-                    if (map[y][x + size] === 1 || (y > 0 && map[y - 1][x + size] === 1) || (y < 9 && map[y + 1][x + size] === 1) || (x + size > 0 && map[y][x + size - 1] === 1) || (x + size < 9 && map[y][x + size + 1] === 1)) {
+                    if (map[y][x + size] === 1 || (y > 0 && map[y - 1][x + size] === 1) || (y < 9 && map[y + 1][x + size] === 1) || (x + size > 0 && map[y][x + size - 1] === 1) || (x + size < 9 && map[y][x + size + 1] === 1) || ((x + size < 9 && y < 9) && map[y + 1][x + size + 1] === 1) || ((y > 0 && x + size < 9) && map[y - 1][x + size + 1] === 1) || ((x > 0 && y < 9) && map[y + 1][x + size - 1] === 1) || ((x > 0 && y > 0) && map[y - 1][x + size - 1] === 1)) {
                         bust = true;
                         break;
                     } else {
                         bust = false;
                     }
                 } else {
-                    if (map[y + size][x] === 1 || (y + size > 0 && map[y + size - 1][x] === 1) || (x < 9 && map[y + size][x + 1] === 1) || (x > 0 && map[y + size][x - 1] === 1) || (y + size < 9 && map[y + size + 1][x] === 1)) {
+                    if (map[y + size][x] === 1 || (y + size > 0 && map[y + size - 1][x] === 1) || (x < 9 && map[y + size][x + 1] === 1) || (x > 0 && map[y + size][x - 1] === 1) || (y + size < 9 && map[y + size + 1][x] === 1) || (x < 9 && y + size < 9 && map[y + size + 1][x + 1] === 1) || (x < 9 && y > 0 && map[y + size - 1][x + 1] === 1) || (y + size < 9 && x > 0 && map[y + size + 1][x - 1] === 1) || (x > 0 && y > 0 && map[y + size - 1][x - 1] === 1)) {
                         bust = true;
                         break;
                     } else {
@@ -90,6 +91,7 @@ export class Map {
                 size--;
             }
         }
+
         return {x, y, direction}
     }
 }

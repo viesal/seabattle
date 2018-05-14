@@ -31,18 +31,12 @@ export class View {
         this.tableMap = [];
 
         this.cross = document.createElement('div');
-        this.cross.style.height = '20px';
-        this.cross.style.width = '20px';
+        this.cross.classList.add('shotResult');
         this.cross.style.backgroundImage = 'url(static/' + cross + ')';
-        this.cross.style.backgroundRepeat = 'no-repeat';
-        this.cross.style.backgroundPosition = 'center';
 
         this.miss = document.createElement('div');
-        this.miss.style.height = '20px';
-        this.miss.style.width = '20px';
+        this.miss.classList.add('shotResult');
         this.miss.style.backgroundImage = 'url(static/' + miss + ')';
-        this.miss.style.backgroundRepeat = 'no-repeat';
-        this.miss.style.backgroundPosition = 'center';
 
         for (let rowNumber = 0; rowNumber < 10; rowNumber++) {
             const tr = createElement(this.tbody, 'tr', 'battleRow');

@@ -19,3 +19,10 @@
     /*width: 20px;*/
     /*height: 20px;*/
 }
+
+.shotResult{
+    height: 20px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
