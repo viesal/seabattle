@@ -1,5 +1,5 @@
 import {Map, humanMap, computerMap} from './Model/Map'
-import {BattleField} from "./View/BattleField/BattleField";
+import {BattleField} from "./View/BattleField";
 
 window.onload = () => {
     let username = 'unknown';

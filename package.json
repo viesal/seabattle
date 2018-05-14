@@ -18,10 +18,14 @@
   },
   "homepage": "https://github.com/viesal/seabattle#readme",
   "dependencies": {
+    "babel-loader": "^7.1.4",
     "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
     "reset-css": "^3.0.0",
     "static": "^2.0.0",
     "style-loader": "^0.21.0",
+    "svg-inline-loader": "^0.8.0",
     "webpack": "^3.2.0",
     "webpack-cli": "^2.1.3"
   }

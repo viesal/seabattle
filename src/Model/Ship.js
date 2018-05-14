@@ -3,14 +3,16 @@ export class Ship {
         this.x = x;
         this.y = y;
         this.isHorisontal = isHorisontal;
-        this.length = [...new Array(lenght)].map(() => {
+        this.length_ship = [...new Array(lenght)].map(() => {
             return 0;
         });
+
+        this.isKill = 0;
     }
 
     getShipPoints() {
         let shipPoint = [];
-        for (let i = 0; i < this.length.length; i++) {
+        for (let i = 0; i < this.length_ship.length; i++) {
             if (this.isHorisontal) {
                 shipPoint.push({x: this.x + i, y: this.y})
             } else {

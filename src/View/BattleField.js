@@ -1,8 +1,8 @@
-import {createElement} from "../../utils/createElement";
-import {humanMap} from "../../Model/Map";
+import {createElement} from "../utils/createElement";
+import {humanMap} from "../Model/Map";
 import './BattleField.css';
 import {Table} from "./Table";
-import {Map} from "../../Model/Map";
+import {Map} from "../Model/Map";
 
 export class BattleField {
     constructor(container, username) {
@@ -16,7 +16,7 @@ export class BattleField {
         this.computerMap = new Map();
 
         this.fillTable(this.humanMap, this.humanBattleField);
-        this.fillTable(this.computerMap, this.computerBattleField);
+        // this.fillTable(this.computerMap, this.computerBattleField);
 
         this.addClickEvent(this.computerBattleField)
 
@@ -25,7 +25,7 @@ export class BattleField {
 
     fillTable(map, field) {
         map.ships.forEach((item) => {
-            for (let i = 0; i < item.length.length; i++) {
+            for (let i = 0; i < item.length_ship.length; i++) {
                 if (item.isHorisontal) {
                     field.fillField(item.x + i, item.y, 1)
                 } else {
@@ -39,21 +39,20 @@ export class BattleField {
         for (const [indexRow, row] of obj.tableMap.entries()) {
             for (const [indexColumn, column] of row.entries()) {
                 column.addEventListener('click', () => {
+                    if (!this.shot(indexColumn, indexRow, this.computerMap.findShip(indexColumn, indexRow), this.computerBattleField)){
+                        let hit = true;
+                        while(hit){
+                            const target = this.randomShot();
+                            hit = this.shot(target.x, target.y, this.humanMap.findShip(target.x, target.y), this.humanBattleField);
 
-                    //TODO: перенести в shot()
-                    const ship_comp = this.computerMap.findShip(indexColumn, indexRow)
-                    if (ship_comp === undefined) {
-                        this.computerBattleField.fillMiss(indexColumn, indexRow)
-                    } else {
-                        this.computerBattleField.fillShip(ship_comp);
+                        }
                     }
-                    const target = this.randomShot()
-                    const ship_human = this.humanMap.findShip(target.x, target.y)
-                    if (ship_human === undefined) {
-                        this.humanBattleField.fillMiss(target.x, target.y)
-                    } else {
-                        this.humanBattleField.fillShip(ship_human);
+                    if (this.humanMap.allShipKilled()){
+                        alert('Выиграл компьютер')
+                    } else if(this.computerMap.allShipKilled()){
+                        alert('Выиграл '+ this.username)
                     }
+
                 }, {once: true})
             }
         }
@@ -70,14 +69,20 @@ export class BattleField {
     }
 
     randomShot() {
-        console.log(this.shotComputer);
+        // console.log(this.shotComputer);
         const rand = Math.round(0.5 + Math.random() * (this.shotComputer.length)) - 1;
         const shot = this.shotComputer[rand];
         this.shotComputer.splice(rand, 1);
         return shot
     }
 
-    shot(x, y, ship) {
-        ///
+    shot(x, y, ship, battleField) {
+        if (ship === undefined) {
+            battleField.fillMiss(x, y)
+            return false;
+        } else {
+            battleField.fillShip(ship);
+            return true;
+        }
     }
 }
