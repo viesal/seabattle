@@ -1,15 +1,29 @@
 import {createElement} from "../utils/createElement";
+import '../View/View.css';
 import miss from "../img/miss.svg";
 import cross from "../img/cross.svg";
 
-export class Table {
+
+export class View {
     constructor(container, username) {
         this.container = container;
         this.username = username;
         const abc = ['a', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'к'];
+
         this.field = createElement(this.container, 'div', 'battleField');
-        this.p = createElement(this.field, 'p');
-        this.p.innerText = this.username;
+
+        this.fieldTitle = createElement(this.field, 'div', 'battleField__title');
+
+        this.blockUserName = createElement(this.fieldTitle, 'div');
+        this.pName = createElement(this.blockUserName, 'p');
+        this.pName.innerText = this.username;
+
+        this.stepStatus = createElement(this.fieldTitle, 'div');
+        this.pStatus = createElement(this.stepStatus, 'p');
+        this.pStatus.innerText = 'Ваш ход';
+        this.pStatus.style.backgroundColor = '#00CC00';
+
+
         this.table = createElement(this.field, 'table', 'battleField__table');
         this.thead = createElement(this.table, 'thead');
         this.tbody = createElement(this.table, 'tbody');
@@ -29,8 +43,6 @@ export class Table {
         this.miss.style.backgroundImage = 'url(static/' + miss + ')';
         this.miss.style.backgroundRepeat = 'no-repeat';
         this.miss.style.backgroundPosition = 'center';
-
-        console.log(this.cross)
 
         for (let rowNumber = 0; rowNumber < 10; rowNumber++) {
             const tr = createElement(this.tbody, 'tr', 'battleRow');
@@ -56,7 +68,7 @@ export class Table {
     }
 
     fillShip(ship) {
-        const shipPoint = ship.getShipPoints()
+        const shipPoint = ship.getShipPoints();
 
         const result = ship.length_ship.reduce((sum, current) => {
             return sum + current;
@@ -82,10 +94,18 @@ export class Table {
     }
 
     fillMiss(x, y) {
-        this.tableMap[y][x].appendChild(this.miss.cloneNode());;
+        this.tableMap[y][x].appendChild(this.miss.cloneNode());
     }
 
-    fillField(x, y, data) {
+    fillField(x, y) {
         this.tableMap[y][x].style.backgroundColor = '#dee2e6';
+    }
+
+    stepStatusHide(status){
+        if (status){
+            this.stepStatus.style.visibility = 'hidden';
+        } else {
+            this.stepStatus.style.visibility = 'visible';
+        }
     }
 }

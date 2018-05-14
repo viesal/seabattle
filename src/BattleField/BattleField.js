@@ -1,16 +1,21 @@
 import {createElement} from "../utils/createElement";
-import {humanMap} from "../Model/Map";
-import './BattleField.css';
-import {Table} from "./Table";
-import {Map} from "../Model/Map";
+import {View} from "../View/View";
+import {Map} from "../Map/Map";
+import "./BattleField.css";
 
 export class BattleField {
     constructor(container, username) {
         this.container = container;
         this.username = username;
         this.app = createElement(this.container, 'div', 'app');
-        this.humanBattleField = new Table(this.app, this.username);
-        this.computerBattleField = new Table(this.app, 'Компьютер');
+
+        this.block = createElement(this.container, 'div', 'block');
+
+        this.humanBattleField = new View(this.app, this.username);
+        this.humanBattleField.stepStatusHide(false);
+
+        this.computerBattleField = new View(this.app, 'Компьютер');
+        this.computerBattleField.stepStatusHide(true);
 
         this.humanMap = new Map();
         this.computerMap = new Map();
@@ -18,7 +23,7 @@ export class BattleField {
         this.fillTable(this.humanMap, this.humanBattleField);
         // this.fillTable(this.computerMap, this.computerBattleField);
 
-        this.addClickEvent(this.computerBattleField)
+        this.addClickEvent(this.computerBattleField);
 
         this.shotComputer = this.createTarget();
     }
@@ -39,20 +44,7 @@ export class BattleField {
         for (const [indexRow, row] of obj.tableMap.entries()) {
             for (const [indexColumn, column] of row.entries()) {
                 column.addEventListener('click', () => {
-                    if (!this.shot(indexColumn, indexRow, this.computerMap.findShip(indexColumn, indexRow), this.computerBattleField)){
-                        let hit = true;
-                        while(hit){
-                            const target = this.randomShot();
-                            hit = this.shot(target.x, target.y, this.humanMap.findShip(target.x, target.y), this.humanBattleField);
-
-                        }
-                    }
-                    if (this.humanMap.allShipKilled()){
-                        alert('Выиграл компьютер')
-                    } else if(this.computerMap.allShipKilled()){
-                        alert('Выиграл '+ this.username)
-                    }
-
+                    this.moves(indexColumn, indexRow)
                 }, {once: true})
             }
         }
@@ -78,11 +70,36 @@ export class BattleField {
 
     shot(x, y, ship, battleField) {
         if (ship === undefined) {
-            battleField.fillMiss(x, y)
+            battleField.fillMiss(x, y);
             return false;
         } else {
             battleField.fillShip(ship);
             return true;
+        }
+    }
+
+    moves(x, y) {
+        if (!this.shot(x, y, this.computerMap.findShip(x, y), this.computerBattleField)) {
+            this.computerBattleField.stepStatusHide(false);
+            this.humanBattleField.stepStatusHide(true);
+            this.block.style.display = 'block';
+            let hit = true;
+            setTimeout(() => {
+                while (hit) {
+                    const target = this.randomShot();
+                    hit = this.shot(target.x, target.y, this.humanMap.findShip(target.x, target.y), this.humanBattleField);
+                }
+                this.computerBattleField.stepStatusHide(true);
+                this.humanBattleField.stepStatusHide(false);
+                this.block.style.display = 'none';
+            }, 1000)
+
+        }
+
+        if (this.humanMap.allShipKilled()) {
+            alert('Выиграл компьютер')
+        } else if (this.computerMap.allShipKilled()) {
+            alert('Выиграл ' + this.username)
         }
     }
 }

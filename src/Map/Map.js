@@ -1,4 +1,4 @@
-import {Ship} from "./Ship";
+import {Ship} from "../Ship/Ship";
 
 export class Map {
     constructor() {
@@ -34,8 +34,8 @@ export class Map {
     }
 
     findShip(x, y) {
-        let targetShip
-        const shipPoints = this.ships.map((ship) => {
+        let targetShip;
+        this.ships.map((ship) => {
             ship.getShipPoints().forEach((coord, index) => {
                 if (coord.x === x && coord.y === y) {
                     ship.length_ship[index] = 1;
@@ -47,14 +47,14 @@ export class Map {
         return targetShip;
     }
 
-    allShipKilled(username) {
+    allShipKilled() {
         let kill_list = 0;
         this.ships.forEach((ship) => {
             if (ship.isKill){
                 kill_list++;
             }
 
-        })
+        });
         if (kill_list === 10){
             return true;
         }
