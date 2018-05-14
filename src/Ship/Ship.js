@@ -14,13 +14,31 @@ export class Ship {
         let shipPoint = [];
         for (let i = 0; i < this.length_ship.length; i++) {
             if (this.isHorisontal) {
-                shipPoint.push({x: this.x + i, y: this.y})
+                shipPoint = [...shipPoint, {x: this.x + i, y: this.y}]
             } else {
-                shipPoint.push({x: this.x, y: this.y + i})
+                shipPoint = [...shipPoint, {x: this.x, y: this.y + i}];
             }
         }
 
         return shipPoint;
     }
+
+    // getEnvShipPoint(){
+    //     let envShipPoint = [];
+    //     for (let i = 0; i < this.length_ship.length; i++) {
+    //         if (!i){
+    //
+    //         }
+    //
+    //         if (this.isHorisontal) {
+    //             shipPoint = [...shipPoint, {x: this.x + i, y: this.y}]
+    //             envShipPoint = [...envShipPoint, {x:}]
+    //         } else {
+    //             shipPoint = [...shipPoint, {x: this.x, y: this.y + i}];
+    //         }
+    //
+    //
+    //     }
+    // }
 
 }
